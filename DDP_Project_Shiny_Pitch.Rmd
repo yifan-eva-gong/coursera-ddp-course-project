@@ -1,0 +1,63 @@
+---
+title: "Developing Data Project Course Project"
+subtitle: "A shiny app to build histograms"
+author: Eva Yifan Gong
+date: 2017/02/21
+output: slidy_presentation
+---
+
+## Introduction
+
+This is a pitch presentation for Coursera's Developing Data Product's course project. In this presentation, I introduce a new app that allows you to interactively build histograms using the `iris` dataset. 
+
+The dataset contains four numeric variables: `Petal.Length`, `Petal.Width`, `Sepal.Length`, and `Sepal.Width`. Using this app, you can create histograms for any above variables. Furthermore, you can change the number of bins and the color of the plot to customize it.
+
+Following slides contain information on:
+
+- Code to build this app
+- Sample plots 
+- Link to the app and the source code
+
+
+## What is this app about?
+
+- Using the `iris` dataset, this app allows you to create histograms for any variable, with any number of bins.
+- You can also select the color from the side bar to make it prettier.
+- A glimpse of the code
+```{r,eval=FALSE}
+output$distPlot <- renderPlot({
+      # generate bins based on input$bins from ui.R
+     chosen <- input$var
+     if (chosen=="Petal.Length"){
+       x  <- iris$Petal.Length
+     } else if (chosen=="Petal.Width"){
+       x  <- iris$Petal.Width
+     } ### ... more conditional statements
+     color=input$col
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      # draw the histogram with the specified number of bins
+      hist(x, breaks = bins, col = color, border = 'white',
+           main = paste("Histogram of",chosen),xlab =chosen)
+   })
+```
+
+## Sample plots from the app
+Here are some sample plots created by the app.
+
+```{r iris, echo = FALSE,fig.height=4,fig.width=4}
+chosen <- 'Petal.Length'
+x <- iris$Petal.Length
+bins <- 30
+hist(x, breaks = bins, col = 'darkgray', border = 'white', main = paste("Histogram of",chosen),xlab =chosen)
+chosen <- 'Sepal.Length'
+x <- iris$Sepal.Width
+bins <- 40
+hist(x, breaks = bins, col = 'yellow', border = 'white', main = paste("Histogram of",chosen),xlab =chosen)
+```
+
+## Interested?
+Go to the website `https://eva717yifan.shinyapps.io/my_app/` to try out this app.
+
+Or go to the github repo to view the source code `https://github.com/yifan-eva-gong/coursera-ddp-course-project` 
+
+Thank you so much for watching the presentation.
